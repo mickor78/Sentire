@@ -13,6 +13,4 @@ import java.util.List;
 public class TrackUtil {
 
     public static final List<String> SUPPORTED_FILE_EXTENSIONS = Arrays.asList(".mp3",".wav");
-    
-
 }
