@@ -53,8 +53,7 @@ public class TrackUtil {
 
             Track track = new Track();
             Media media = new Media(mediaURL);
-            track.setFileName(file.split("-")[0]);
-            track.setAlbum(file.split("-")[1]);
+            handleWithMetadata(file, track);
             track.setMedia(media);
             track.setFileName(file);
             track.setPath(dir + "/" + file);
@@ -62,5 +61,17 @@ public class TrackUtil {
         }
 
         return tracks;
+    }
+
+
+    /**
+     * Extract metadata information from file
+     *
+     * @param file
+     * @param track
+     */
+    public static void handleWithMetadata(String file, Track track) {
+        track.setFileName(file.split("-")[0]);
+        track.setAlbum(file.split("-")[1]);
     }
 }

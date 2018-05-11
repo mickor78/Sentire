@@ -9,14 +9,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="296.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIConrollers.PlayerController">
    <children>
       <HBox layoutX="322.0" layoutY="14.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox prefHeight="19.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kolejka Odtwarzania" wrappingWidth="285.833984375">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kolejka Odtwarzania" wrappingWidth="279.833984375">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
@@ -26,10 +25,8 @@
                   </Text>
                   <TableView prefHeight="214.0" prefWidth="316.0">
                     <columns>
-                      <TableColumn prefWidth="116.0" text="nazwa" />
-                      <TableColumn prefWidth="75.0" text="autor" />
-                        <TableColumn prefWidth="62.0" text="album" />
-                        <TableColumn prefWidth="62.0" text="czas trwania" />
+                      <TableColumn prefWidth="217.0" text="nazwa" />
+                      <TableColumn prefWidth="77.0" text="autor" />
                     </columns>
                   </TableView>
                   <HBox prefHeight="8.0" prefWidth="306.0">
@@ -61,6 +58,7 @@
                         <Button mnemonicParsing="false" text="CLOSE" />
                       <Button mnemonicParsing="false" text="MAXIMALIZE" />
                         <Button mnemonicParsing="false" text="MINIMALIZE" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sentire" textAlignment="CENTER" wrappingWidth="60.861328125" />
                     </items>
                   </ToolBar>
                   <HBox alignment="CENTER" prefHeight="36.0" prefWidth="306.0" spacing="10.0">

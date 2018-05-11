@@ -30,7 +30,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Sonora");
+        this.primaryStage.setTitle("Sentire");
 
         //Undecorated window
         this.primaryStage.initStyle(StageStyle.TRANSPARENT);
@@ -51,7 +51,7 @@ public class MainApp extends Application {
 
         try {
             //Load player overview
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("fxml/Player.fxml"));
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/Player.fxml"));
             AnchorPane anchorPane = loader.load();
 
             //Show the sceme containing the stackPane
