@@ -42,6 +42,11 @@ public class MainApp extends Application {
         initPlayer();
         }
 
+
+    /**
+     * Show player and init controller
+     */
+
     public void initPlayer() {
 
         try {
