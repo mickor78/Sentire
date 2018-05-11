@@ -1,4 +1,4 @@
-package GUI;
+package GUIConrollers;
 
 public class PlayerController {
 }

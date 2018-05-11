@@ -2,8 +2,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -48,7 +46,7 @@ public class MainApp extends Application {
 
         try {
             //Load player overview
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/GUI/Player.fxml"));
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("fxml/Player.fxml"));
             AnchorPane anchorPane = loader.load();
 
             //Show the sceme containing the stackPane
