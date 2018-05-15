@@ -45,16 +45,16 @@ public class Track {
         this.path = new SimpleStringProperty(fileName);
     }
 
+    public Track(File file) {
+        this.file = file;
+    }
+
     public File getFile() {
         return file;
     }
 
     public void setFile(File file) {
         this.file = file;
-    }
-
-    public String getFileName() {
-        return fileName.get();
     }
 
     public StringProperty fileNameProperty() {
@@ -74,7 +74,7 @@ public class Track {
     }
 
     public void setPath(String path) {
-        this.path.set(path);
+        this.path=new SimpleStringProperty(path);
     }
 
     public Media getMedia() {
@@ -106,7 +106,7 @@ public class Track {
     }
 
     public void setArtist(String artist) {
-        this.artist.set(artist);
+        this.artist = new SimpleStringProperty(artist);
     }
 
     public String getTitle() {
@@ -118,7 +118,7 @@ public class Track {
     }
 
     public void setTitle(String title) {
-        this.title.set(title);
+        this.title = new SimpleStringProperty(title);
     }
 
     public String getYear() {

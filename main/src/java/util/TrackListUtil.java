@@ -15,7 +15,7 @@ import java.io.*;
  */
 
 public class TrackListUtil {
-    private TrackList playlista1 = new TrackList();
+    private TrackList trackList = new TrackList();
     private String Path;
 
     /**
@@ -32,7 +32,7 @@ public class TrackListUtil {
      */
 
     public TrackListUtil(TrackList playlista1, String path) {
-        this.playlista1 = playlista1;
+        this.trackList = playlista1;
         Path = path;
     }
 
@@ -49,7 +49,7 @@ public class TrackListUtil {
             e.printStackTrace();
         }
 
-        playlista1.setPath(Path);
+        trackList.setPath(Path);
     }
 
     /**
@@ -66,7 +66,7 @@ public class TrackListUtil {
      */
     public void setSamplePath(){
         Path= "C:\\Users\\Ja\\Desktop\\PROZ\\Nowości Disco Polo  2017   08.02  -  09.02  2017";
-        playlista1.setPath(Path);
+        trackList.setPath(Path);
     }
 
     /**
@@ -84,22 +84,24 @@ public class TrackListUtil {
         });
 
         for (File i: matchingFiles) {
-            Track track = new Track(i,i.getName(),i.getPath());
-            playlista1.addToPlaylist(track);
+            Track track = new Track(i);
+            track = TrackUtil.callTrackUtil(track);
+            trackList.addToPlaylist(track);
         }
     }
+
 
     /**
      * show Playlist on console
      */
 
     public void showPlaylist(){
-        ObservableList<Track> forShowPlaylist = playlista1.getPlaylist();
+        ObservableList<Track> forShowPlaylist = trackList.getPlaylist();
         int index = 0;
         for (Track t:forShowPlaylist
                 ) {
             index++;
-            System.out.println(index+". "+t.getFileName());
+            System.out.println(index+".\t"+t.getTitle()+"\t"+t.getArtist());
         }
     }
 
@@ -108,8 +110,8 @@ public class TrackListUtil {
      *
      * @return TrackList
      */
-    public TrackList getPlaylista1() {
-        return playlista1;
+    public TrackList getTrackList() {
+        return trackList;
     }
 
     /**
