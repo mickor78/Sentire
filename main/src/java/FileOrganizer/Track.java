@@ -1,5 +1,6 @@
 package FileOrganizer;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
@@ -38,10 +39,10 @@ public class Track {
      * @param file
      * @param path
      */
-    public Track(File file, StringProperty fileName, StringProperty path) {
+    public Track(File file, String fileName, String path) {
         this.file = file;
-        this.fileName = fileName;
-        this.path = path;
+        this.fileName = new SimpleStringProperty(fileName);
+        this.path = new SimpleStringProperty(fileName);
     }
 
     public File getFile() {
