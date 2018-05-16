@@ -1,9 +1,12 @@
+package mickor78;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import mickor78.GUIConrollers.PlayerController;
 
 import java.io.IOException;
 
@@ -49,10 +52,15 @@ public class MainApp extends Application {
 
     public void initPlayer() {
 
+
         try {
             //Load player overview
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("fxml/Player.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/mickor78/fxml/Player.fxml"));
             AnchorPane anchorPane = loader.load();
+
+            PlayerController playerController = loader.getController();
+            playerController.setMainApp(this);
 
             //Show the sceme containing the stackPane
             Scene scene = new Scene(anchorPane);
@@ -61,5 +69,9 @@ public class MainApp extends Application {
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

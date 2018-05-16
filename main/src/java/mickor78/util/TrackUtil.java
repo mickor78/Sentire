@@ -1,6 +1,6 @@
-package util;
+package mickor78.util;
 
-import FileOrganizer.Track;
+import mickor78.FileOrganizer.Track;
 import javafx.scene.media.Media;
 
 import java.util.Arrays;

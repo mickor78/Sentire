@@ -1,4 +1,4 @@
-package FileOrganizer;
+package mickor78.FileOrganizer;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -78,8 +78,8 @@ public class TrackList {
         this.id.set(id);
     }
 
-    public String getName() {
-        return name.get();
+    public StringProperty getName() {
+        return name;
     }
 
     public StringProperty nameProperty() {
@@ -87,11 +87,11 @@ public class TrackList {
     }
 
     public void setName(String name) {
-        this.name.set(name);
+        this.name = new SimpleStringProperty(name);
     }
 
     public String getPath() {
-        return path.get();
+        return path.getValue();
     }
 
     public StringProperty pathProperty() {
@@ -107,4 +107,8 @@ public class TrackList {
      * @return boolean
      */
     public boolean isPathEmpty(){ return (0==path.getValue().length());}
+
+    public void deletePlaylist() {
+        playlist.removeAll();
+    }
 }

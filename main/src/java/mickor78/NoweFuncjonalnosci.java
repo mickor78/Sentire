@@ -1,13 +1,10 @@
-import FileOrganizer.Track;
-import FileOrganizer.TrackList;
-import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.stage.Stage;
-import util.PlayerUtil;
-import util.TrackListUtil;
+package mickor78;
 
-import java.io.*;
-import java.net.URL;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import mickor78.FileOrganizer.*;
+import mickor78.util.*;
+
 import java.util.Scanner;
 
 import static javafx.application.Application.launch;
@@ -38,7 +35,7 @@ public class NoweFuncjonalnosci extends Application{
         Scanner in = new Scanner(System.in);
         int index = in.nextInt();
         Track track = nf.getTrackList().getPlaylist().get(index);
-        playerUtil.setCurrentTrack(track);
+        playerUtil.setCurrentMedia(track);
         playerUtil.playCurrentTrack();
 
 

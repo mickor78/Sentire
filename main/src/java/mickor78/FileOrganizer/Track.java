@@ -1,4 +1,4 @@
-package FileOrganizer;
+package mickor78.FileOrganizer;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -65,8 +65,8 @@ public class Track {
         this.fileName.set(fileName);
     }
 
-    public String getPath() {
-        return path.get();
+    public StringProperty getPath() {
+        return path;
     }
 
     public StringProperty pathProperty() {
@@ -85,8 +85,8 @@ public class Track {
         this.media = media;
     }
 
-    public String getAlbum() {
-        return album.get();
+    public StringProperty getAlbum() {
+        return album;
     }
 
     public StringProperty albumProperty() {
@@ -97,8 +97,8 @@ public class Track {
         this.album.set(album);
     }
 
-    public String getArtist() {
-        return artist.get();
+    public StringProperty getArtist() {
+        return artist;
     }
 
     public StringProperty artistProperty() {
@@ -109,8 +109,8 @@ public class Track {
         this.artist = new SimpleStringProperty(artist);
     }
 
-    public String getTitle() {
-        return title.get();
+    public StringProperty getTitle() {
+        return title;
     }
 
     public StringProperty titleProperty() {

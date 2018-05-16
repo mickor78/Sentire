@@ -1,6 +1,7 @@
 package FileOrganizer;
 
 import javafx.collections.ObservableList;
+import mickor78.FileOrganizer.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

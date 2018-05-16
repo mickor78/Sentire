@@ -1,7 +1,7 @@
 package util;
 
-import FileOrganizer.Track;
-import FileOrganizer.TrackList;
+import mickor78.FileOrganizer.*;
+import mickor78.util.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

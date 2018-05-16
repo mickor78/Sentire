@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>Sonora</groupId>
-    <artifactId>Sonora</artifactId>
+    <groupId>Sentire</groupId>
+    <artifactId>Sentire</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -16,7 +16,7 @@
                     <archive>
                         <manifest>
                             <!--<addClasspath>true</addClasspath>-->
-                            <mainClass>MainApp</mainClass>
+                            <mainClass>mickor78.MainApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

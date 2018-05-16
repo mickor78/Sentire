@@ -1,9 +1,8 @@
-package util;
+package mickor78.util;
 
 
-import FileOrganizer.Track;
-import FileOrganizer.TrackList;
 import javafx.collections.ObservableList;
+import mickor78.FileOrganizer.*;
 
 import java.io.*;
 
@@ -17,6 +16,7 @@ import java.io.*;
 public class TrackListUtil {
     private TrackList trackList = new TrackList();
     private String Path;
+    private String name;
 
     /**
      * Default constructor
@@ -76,6 +76,8 @@ public class TrackListUtil {
 
     public void searchInPathAndAddToPlaylist(){
         File pathFile = new File(Path);
+        name = pathFile.getName();
+        setNameToTrackList();
         File[] matchingFiles = pathFile.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File pathname, String name) {
@@ -101,7 +103,7 @@ public class TrackListUtil {
         for (Track t:forShowPlaylist
                 ) {
             index++;
-            System.out.println(index+".\t"+t.getTitle()+"\t"+t.getArtist());
+                System.out.println(index+".\t"+t.getTitle()+"\t"+t.getArtist());
         }
     }
 
@@ -125,5 +127,13 @@ public class TrackListUtil {
         url = url.replace("[", "%5B");
         url = url.replace("]", "%5D");
         return url;
+    }
+
+    public void setTrackList(TrackList trackList) {
+        this.trackList = trackList;
+    }
+
+    public void setNameToTrackList(){
+        trackList.setName(name);
     }
 }
