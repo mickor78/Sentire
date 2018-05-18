@@ -60,6 +60,9 @@ private Slider sliderFast;
     private Button closeButton;
 
     @FXML
+    private Button addAllToPlayback;
+
+    @FXML
     private Button addPlaylistButton;
 
     @FXML
@@ -184,10 +187,17 @@ private Slider sliderFast;
     @FXML
     void addToPlaybackHandle() {
         playerUtil.addTrackToCurrentTracklist(addToPlayBackTrack);
-        System.out.println("Wcisłem");
         refreshList(listPlayback);
         setupPlaybackView();
     }
+
+    @FXML
+    void addAllToPlaybackHandle(){
+        playerUtil.addPlaylistToPlayback(currentPlaylist);
+        refreshList(listPlayback);
+        setupPlaybackView();
+    }
+
 
 
 

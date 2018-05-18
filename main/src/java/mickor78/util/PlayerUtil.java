@@ -94,4 +94,11 @@ public class PlayerUtil {
     public void removeTracklist(TrackList currentPlaylist) {
         listOfPlaylist.remove(currentPlaylist);
     }
+
+    public void addPlaylistToPlayback(TrackList currentPlaylist) {
+        for (Track t:currentPlaylist.getPlaylist()
+             ) {
+            currentTracklist.addToPlaylist(t);
+        }
+    }
 }

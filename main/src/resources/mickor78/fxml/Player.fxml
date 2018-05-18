@@ -162,7 +162,7 @@
                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                                <children>
                                    <Button fx:id="addToPlaybackButton" mnemonicParsing="false" onMouseClicked="#addToPlaybackHandle" text="Dodaj do kolejki" />
-                                   <Button mnemonicParsing="false" text="Dodaj wszystko" />
+                                   <Button fx:id="addAllToPlayback" mnemonicParsing="false" onMouseClicked="#addAllToPlaybackHandle" text="Dodaj wszystko" />
                                </children>
                            </HBox>
                        </children>
