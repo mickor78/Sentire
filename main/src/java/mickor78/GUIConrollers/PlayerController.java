@@ -68,7 +68,6 @@ private Slider sliderFast;
     private boolean played;
     private boolean maximalized;
     private PlayerUtil playerUtil;
-    private TrackListUtil trackListUtil;
     private Stage dialogStage;
 
     //current variables
@@ -221,7 +220,7 @@ private Slider sliderFast;
         File selectedDirectory = chooser.showDialog(dialogStage);
 
         //creating tracklist
-//        trackListUtil = new TrackListUtil();
+        TrackListUtil trackListUtil = new TrackListUtil();
         trackListUtil.setPath(selectedDirectory.getPath());
         trackListUtil.searchInPathAndAddToPlaylist();
 
@@ -246,15 +245,18 @@ private Slider sliderFast;
     @FXML
     void initialize() {
         playerUtil = new PlayerUtil();
-        trackListUtil = new TrackListUtil();
         currentPlaylist = new TrackList();
 
+        playingSpeedHandler();
+        setupTrackListView();
+    }
+
+    private void playingSpeedHandler() {
         sliderFast.valueProperty().addListener(((observable, oldValue, newValue) -> {
             speed = Math.exp(Math.pow(newValue.doubleValue()/50,1.0));
             fastLabel.setText(String.format("%.2f",speed)+"x");
             playerUtil.setRate(speed);
         } ));
-        setupTrackListView();
     }
 
     public void refreshTable(TableView table) {

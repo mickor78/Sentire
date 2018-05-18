@@ -136,4 +136,8 @@ public class TrackListUtil {
     public void setNameToTrackList(){
         trackList.setName(name);
     }
+
+    public void deleteTrackList() {
+        trackList.deletePlaylist();
+    }
 }

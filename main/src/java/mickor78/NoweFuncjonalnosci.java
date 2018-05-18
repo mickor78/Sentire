@@ -5,6 +5,8 @@ import javafx.stage.Stage;
 import mickor78.FileOrganizer.*;
 import mickor78.util.*;
 
+import javax.sound.sampled.AudioFileFormat;
+import java.io.File;
 import java.util.Scanner;
 
 import static javafx.application.Application.launch;
@@ -37,6 +39,8 @@ public class NoweFuncjonalnosci extends Application{
         Track track = nf.getTrackList().getPlaylist().get(index);
         playerUtil.setCurrentMedia(track);
         playerUtil.playCurrentTrack();
+
+
 
 
 
