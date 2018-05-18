@@ -12,23 +12,29 @@ public class PlayerUtil {
     private ObservableList<TrackList> listOfPlaylist = FXCollections.observableArrayList();
     private TrackList currentTracklist;
     private Track currentTrack;
+    private int currentTrackIndex;
+    private boolean currentIsLast;
+    private boolean currentIsFirst;
     private Media currentMedia;
-    private Media nextTrack;
-    private Media previousTrack;
+    private Track nextTrack;
+    private Track previousTrack;
     private MediaPlayer player;
 
+    private boolean repeat;
 
-    public void addTrackToCurrentTracklist(Track track){currentTracklist.addToPlaylist(track);}
+    public void addTrackToCurrentTracklist(Track track) {
+        currentTracklist.addToPlaylist(track);
+    }
 
     public PlayerUtil() {
         currentTracklist = new TrackList();
     }
 
-    public void addPlaylistToListOfPlaylist(TrackList newTrackList){
+    public void addPlaylistToListOfPlaylist(TrackList newTrackList) {
         listOfPlaylist.add(newTrackList);
     }
 
-    public void removeCurrentSetOfTracklist(){
+    public void removeCurrentSetOfTracklist() {
         listOfPlaylist.removeAll();
     }
 
@@ -36,34 +42,80 @@ public class PlayerUtil {
         this.currentTracklist = currentTracklist;
     }
 
-    public void setCurrentMedia(Track track){
+    public void setCurrentMedia(Track track) {
         currentMedia = new Media(track.getFile().toURI().toString());
-        currentTrack=track;
+        currentTrack = track;
+        currentTrackIndex = currentTracklist.getPlaylist().indexOf(track);
+
+
+        currentIsLast = currentTrackIndex == currentTracklist.getPlaylist().size()-1;
+        currentIsFirst = currentTrackIndex == 0;
+
+        if (!currentIsLast) nextTrack = currentTracklist.getPlaylist().get(currentTrackIndex + 1);
+        if (!currentIsFirst) previousTrack = currentTracklist.getPlaylist().get(currentTrackIndex - 1);
+
     }
 
 
+    public void playNext() {
+        if (player != null) {
+            if (!currentIsLast) {
+                setCurrentMedia(nextTrack);
+                player.stop();
+                initialPlayer();
+                player.play();
+            } else {
+                initialPlayer();
+                play();
+            }
+        }
+    }
 
-    public void playCurrentTrack(){
+    public void playPrevious() {
+        if (player != null) {
+            if (!currentIsFirst) {
+                setCurrentMedia(previousTrack);
+                player.stop();
+                initialPlayer();
+                player.play();
+            } else {
+                initialPlayer();
+                play();
+            }
+        }
+    }
+
+    public Track getNextTrack() {
+        return nextTrack;
+    }
+
+    public Track getPreviousTrack() {
+        return previousTrack;
+    }
+
+    public void playCurrentTrack() {
         initialPlayer();
         player.play();
     }
 
-    public void play(){
-        if(player != null) {
-                player.play();
+    public void play() {
+        if (player != null) {
+            player.play();
         }
     }
 
-    public void pause(){
+    public void pause() {
         player.pause();
     }
 
-    public void stop(){
+    public void stop() {
         player.stop();
     }
 
     public void initialPlayer() {
+        if (player != null) player.stop();
         player = new MediaPlayer(currentMedia);
+        repeat(repeat);
     }
 
 
@@ -96,9 +148,18 @@ public class PlayerUtil {
     }
 
     public void addPlaylistToPlayback(TrackList currentPlaylist) {
-        for (Track t:currentPlaylist.getPlaylist()
-             ) {
+        for (Track t : currentPlaylist.getPlaylist()
+                ) {
             currentTracklist.addToPlaylist(t);
         }
+    }
+
+    public void repeat(boolean iWantTo) {
+        repeat = iWantTo;
+        player.getOnRepeat();
+    }
+
+    public Media getMedia() {
+        return currentMedia;
     }
 }

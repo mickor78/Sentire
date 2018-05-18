@@ -1,14 +1,20 @@
 package mickor78.GUIConrollers;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import mickor78.FileOrganizer.Track;
 import mickor78.FileOrganizer.TrackList;
 import mickor78.MainApp;
@@ -22,22 +28,29 @@ public class PlayerController {
 
     @FXML
     private ListView<Track> playlistView;
-    private  ObservableList<Track> observablePlayListView;
+    private ObservableList<Track> observablePlayListView;
 
-@FXML
-private Label titleLabel;
-@FXML
-private Label autorLabel;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Label autorLabel;
 
-@FXML
-private Label trackInfo;
+    @FXML
+    private Label trackInfo;
 
-@FXML
-private Label fastLabel;
+    @FXML
+    private Label fastLabel;
 
-@FXML
-private Slider sliderFast;
+    @FXML
+    private Slider sliderFast;
 
+
+    @FXML
+    private ProgressBar progressBar;
+    private ChangeListener<Duration> progressChangeListener;
+
+    @FXML
+    private Label timeLabel;
 
     @FXML
     private Button stopButton;
@@ -50,11 +63,22 @@ private Slider sliderFast;
     private Button playButton;
 
     @FXML
-    private  Button removeTracklistButton;
+    private Button nextTrackButton;
+
+    @FXML
+    private Button previousTrackButton;
+
+    @FXML
+    private Button removeTracklistButton;
 
     @FXML
     private Button addToPlaybackButton;
 
+    @FXML
+    private Button shuffleButton;
+
+    @FXML
+    private Button repeatButton;
 
     @FXML
     private Button closeButton;
@@ -75,6 +99,7 @@ private Slider sliderFast;
     private MainApp mainApp;
 
     private boolean played;
+    private boolean repeat;
     private boolean maximalized;
     private PlayerUtil playerUtil;
     private Stage dialogStage;
@@ -108,7 +133,7 @@ private Slider sliderFast;
     @FXML
     void handleMaximalize() {
         if (maximalized) {
-            maximalized=false;
+            maximalized = false;
             mainApp.getPrimaryStage().setMaximized(false);
             mainApp.getPrimaryStage().setMaxHeight(600);
             mainApp.getPrimaryStage().setMinWidth(300);
@@ -121,8 +146,7 @@ private Slider sliderFast;
     }
 
 
-
-    private void setupTrackListView(){
+    private void setupTrackListView() {
         observableTrackList = playerUtil.getAll();
         trackListView.setItems(observableTrackList);
 
@@ -141,8 +165,8 @@ private Slider sliderFast;
         });
 
         //Handle view tracklist on one click
-        trackListView.setOnMouseClicked((MouseEvent click)->{
-            if(click.getClickCount()==1){
+        trackListView.setOnMouseClicked((MouseEvent click) -> {
+            if (click.getClickCount() == 1) {
                 currentPlaylist.deletePlaylist();
                 currentPlaylist = trackListView.getSelectionModel().getSelectedItem();
                 refreshList(playlistView);
@@ -152,8 +176,8 @@ private Slider sliderFast;
 
     }
 
-    private void setupPlaylistView(){
-        observablePlayListView=currentPlaylist.getPlaylist();
+    private void setupPlaylistView() {
+        observablePlayListView = currentPlaylist.getPlaylist();
         playlistView.setItems((observablePlayListView));
 
         playlistView.setCellFactory((ListView<Track> p) -> {
@@ -162,16 +186,16 @@ private Slider sliderFast;
                 protected void updateItem(Track track, boolean bln) {
                     super.updateItem(track, bln);
                     if (track != null) {
-                        setText(track.getTitle().getValue()+" "+track.getArtist().getValue());
+                        setText(track.getTitle().getValue() + " " + track.getArtist().getValue());
                     }
                 }
             };
             return cell;
         });
 
-        playlistView.setOnMouseClicked((MouseEvent click)->{
-            if(click.getClickCount()==1){
-                addToPlayBackTrack=playlistView.getSelectionModel().getSelectedItem();
+        playlistView.setOnMouseClicked((MouseEvent click) -> {
+            if (click.getClickCount() == 1) {
+                addToPlayBackTrack = playlistView.getSelectionModel().getSelectedItem();
             }
         });
 
@@ -192,18 +216,14 @@ private Slider sliderFast;
     }
 
     @FXML
-    void addAllToPlaybackHandle(){
+    void addAllToPlaybackHandle() {
         playerUtil.addPlaylistToPlayback(currentPlaylist);
         refreshList(listPlayback);
         setupPlaybackView();
     }
 
 
-
-
-
-
-    private void setupPlaybackView(){
+    private void setupPlaybackView() {
         observablePlayListView = playerUtil.getCurrentTracklist().getPlaylist();
         listPlayback.setItems(observablePlayListView);
 
@@ -213,7 +233,7 @@ private Slider sliderFast;
                 protected void updateItem(Track track, boolean bln) {
                     super.updateItem(track, bln);
                     if (track != null) {
-                        setText(track.getTitle().getValue()+" "+track.getArtist().getValue());
+                        setText(track.getTitle().getValue() + " " + track.getArtist().getValue());
                     }
                 }
             };
@@ -221,31 +241,54 @@ private Slider sliderFast;
         });
 
 
-        listPlayback.setOnMouseClicked((MouseEvent click)->{
-            if(click.getClickCount()==2){
+        listPlayback.setOnMouseClicked((MouseEvent click) -> {
+            if (click.getClickCount() == 2) {
+                playerUtil.pause();
                 playerUtil.setCurrentMedia(listPlayback.getSelectionModel().getSelectedItem());
-                playerUtil.initialPlayer();
                 handlePlayTrigger();
-                setMediaInfo(listPlayback.getSelectionModel().getSelectedItem());
+            } else if (click.getClickCount() == 1) {
+                playerUtil.setCurrentMedia(listPlayback.getSelectionModel().getSelectedItem());
             }
         });
     }
 
-
     @FXML
-    private void handlePlayTrigger(){
-        played = playerUtil.getPlayer().getStatus().equals(MediaPlayer.Status.PLAYING);
-        if(!played){
-            playerUtil.play();
-            playButton.setText("Pause");
-        }else{
-            playerUtil.pause();
-            playButton.setText("Play");
+    private void handleRepeatTrigger() {
+        if (!played) {
+            playerUtil.repeat(true);
+        } else {
+            playerUtil.repeat(false);
         }
     }
 
     @FXML
-    private void handleStopTrgger(){
+    private void handleShuffleTrigger() {
+
+    }
+
+    @FXML
+    private void handlePlayTrigger() {
+
+        if (playerUtil.getMedia()!=null) {
+            setMediaInfo(playerUtil.getCurrentTrack());
+            playerUtil.initialPlayer();
+
+        played = playerUtil.getPlayer().getStatus().equals(MediaPlayer.Status.PLAYING);
+        if (!played) {
+            playerUtil.play();
+            playButton.setText("Pause");
+        } else {
+            playerUtil.pause();
+            playButton.setText("Play");
+        }
+            handleProgresBar();
+
+        }
+    }
+
+    @FXML
+    private void handleStopTrgger() {
+        progressBar.setProgress(0);
         playerUtil.stop();
         playButton.setText("Play");
     }
@@ -262,22 +305,38 @@ private Slider sliderFast;
         trackListUtil.searchInPathAndAddToPlaylist();
 
         //create Tracklist and add to playerUtil
-        TrackList newTrackList =trackListUtil.getTrackList();
+        TrackList newTrackList = trackListUtil.getTrackList();
         playerUtil.addPlaylistToListOfPlaylist(newTrackList);
-        }
+    }
 
 
-        @FXML
-        private void handleTrackInfo(){
+    @FXML
+    private void handleTrackInfo() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Information about current track");
         alert.setHeaderText(playerUtil.getCurrentTrack().getTitle().getValue());
         alert.setContentText(playerUtil.getCurrentTrack().getArtist().getValue());
         alert.showAndWait();
-        }
+    }
 
 
+    @FXML
+    private void handleNextTrack() {
+
+        playerUtil.playNext();
+        setMediaInfo(playerUtil.getCurrentTrack());
+        playButton.setText("Pause");
+        handleProgresBar();
+    }
+
+    @FXML
+    private void handlePreviousTrack() {
+        playerUtil.playPrevious();
+        setMediaInfo(playerUtil.getCurrentTrack());
+        playButton.setText("Pause");
+        handleProgresBar();
+    }
 
     @FXML
     void initialize() {
@@ -288,18 +347,39 @@ private Slider sliderFast;
         setupTrackListView();
     }
 
+    private void handleProgresBar() {
+        // Add progressbar listener to show current song percent
+        progressChangeListener = (ObservableValue<? extends Duration> observableValue,
+                                  Duration oldValue, Duration newValue) -> {
+            double currentTimeMillis = playerUtil.getPlayer().getCurrentTime().toMillis();
+            double totalDurationMillis = playerUtil.getPlayer().getTotalDuration().toMillis();
+            progressBar.setProgress(1.0 * currentTimeMillis / totalDurationMillis);
+
+            // Set time count in label
+            double currentTimeSeconds = playerUtil.getPlayer().getCurrentTime().toSeconds();
+            int minutes = (int) (currentTimeSeconds % 3600) / 60;
+            int seconds = (int) currentTimeSeconds % 60;
+            String formattedMinutes = String.format("%02d", minutes);
+            String formattedSeconds = String.format("%02d", seconds);
+            timeLabel.setText(formattedMinutes + ":" + formattedSeconds);
+
+        };
+        playerUtil.getPlayer().currentTimeProperty().addListener(progressChangeListener);
+
+    }
+
     private void playingSpeedHandler() {
         sliderFast.valueProperty().addListener(((observable, oldValue, newValue) -> {
-            speed = Math.exp(Math.pow(newValue.doubleValue()/50,1.0));
-            fastLabel.setText(String.format("%.2f",speed)+"x");
+            speed = Math.exp(Math.pow(newValue.doubleValue() / 50, 1.0));
+            fastLabel.setText(String.format("%.2f", speed) + "x");
             playerUtil.setRate(speed);
-        } ));
+        }));
     }
 
     public void refreshTable(TableView table) {
         for (int i = 0; i < table.getColumns().size(); i++) {
             TableColumn tableColumn = ((TableColumn) (table.getColumns().get(i)));
-            if(tableColumn.isVisible()) {
+            if (tableColumn.isVisible()) {
                 tableColumn.setVisible(false);
                 tableColumn.setVisible(true);
             }
@@ -312,12 +392,10 @@ private Slider sliderFast;
         listView.setItems(items);
     }
 
-    public void setMediaInfo(Track track){
+    public void setMediaInfo(Track track) {
         titleLabel.setText(track.getTitle().getValue());
         autorLabel.setText(track.getArtist().getValue());
     }
-
-
 
 
 }
