@@ -31,6 +31,9 @@ public class NoweFuncjonalnosci extends Application{
         nf.searchInPathAndAddToPlaylist();
         nf.showPlaylist();
 
+        nf.shuffle();
+        nf.showPlaylist();
+
         PlayerUtil playerUtil = new PlayerUtil();
 
 

@@ -26,22 +26,14 @@
                            </font>
                         </Text>
                         <ListView fx:id="listPlayback" prefHeight="200.0" prefWidth="200.0" />
-                        <HBox prefHeight="8.0" prefWidth="306.0">
-                           <children>
-                              <TextField prefHeight="25.0" prefWidth="191.0">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Wyszukaj">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
+                        <HBox alignment="CENTER" prefHeight="8.0" prefWidth="306.0" spacing="5.0">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
+                           <children>
+                              <Button mnemonicParsing="false" text="Usuń z kolejki" />
+                              <Button mnemonicParsing="false" text="Usuń kolejke" />
+                           </children>
                         </HBox>
                      </children>
                      <padding>
@@ -59,7 +51,7 @@
                         </ToolBar>
                         <HBox alignment="CENTER" prefHeight="36.0" prefWidth="306.0" spacing="10.0">
                            <children>
-                              <Label text="PLAYLISTA" textAlignment="CENTER">
+                              <Label onMouseClicked="#handlePlaylist" text="PLAYLISTA" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>

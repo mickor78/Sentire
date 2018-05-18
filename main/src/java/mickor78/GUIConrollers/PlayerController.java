@@ -9,6 +9,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
@@ -29,6 +30,9 @@ public class PlayerController {
     @FXML
     private ListView<Track> playlistView;
     private ObservableList<Track> observablePlayListView;
+
+    @FXML
+    private AnchorPane MainPane;
 
     @FXML
     private Label titleLabel;
@@ -176,6 +180,8 @@ public class PlayerController {
 
     }
 
+
+
     private void setupPlaylistView() {
         observablePlayListView = currentPlaylist.getPlaylist();
         playlistView.setItems((observablePlayListView));
@@ -243,8 +249,10 @@ public class PlayerController {
 
         listPlayback.setOnMouseClicked((MouseEvent click) -> {
             if (click.getClickCount() == 2) {
-                playerUtil.pause();
+                //playerUtil.pause();
                 playerUtil.setCurrentMedia(listPlayback.getSelectionModel().getSelectedItem());
+                setMediaInfo(playerUtil.getCurrentTrack());
+                playerUtil.initialPlayer();
                 handlePlayTrigger();
             } else if (click.getClickCount() == 1) {
                 playerUtil.setCurrentMedia(listPlayback.getSelectionModel().getSelectedItem());
@@ -263,15 +271,20 @@ public class PlayerController {
 
     @FXML
     private void handleShuffleTrigger() {
-
+        TrackListUtil trackListUtil= new TrackListUtil(playerUtil.getCurrentTracklist());
+        trackListUtil.shuffle();
+        playerUtil.setCurrentTracklist(trackListUtil.getTrackList());
+        refreshList(listPlayback);
+        setupPlaybackView();
     }
 
     @FXML
     private void handlePlayTrigger() {
 
-        if (playerUtil.getMedia()!=null) {
+        if(!playerUtil.getPlayer().getMedia().equals(playerUtil.getCurrentTrack())){
             setMediaInfo(playerUtil.getCurrentTrack());
             playerUtil.initialPlayer();
+        }
 
         played = playerUtil.getPlayer().getStatus().equals(MediaPlayer.Status.PLAYING);
         if (!played) {
@@ -283,7 +296,7 @@ public class PlayerController {
         }
             handleProgresBar();
 
-        }
+
     }
 
     @FXML
@@ -396,8 +409,6 @@ public class PlayerController {
         titleLabel.setText(track.getTitle().getValue());
         autorLabel.setText(track.getArtist().getValue());
     }
-
-
 }
 
 

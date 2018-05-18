@@ -1,10 +1,13 @@
 package mickor78.util;
 
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mickor78.FileOrganizer.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utilities to deal with Tracklists.
@@ -36,6 +39,11 @@ public class TrackListUtil {
         Path = path;
     }
 
+    public TrackListUtil(TrackList currentTracklist) {
+        this.trackList = currentTracklist;
+
+    }
+
     /**
      * Read path to search tracks in imputed path
      *
@@ -65,7 +73,7 @@ public class TrackListUtil {
      * Set sample path
      */
     public void setSamplePath(){
-        Path= "C:\\Users\\Ja\\Desktop\\PROZ\\Nowości Disco Polo  2017   08.02  -  09.02  2017";
+        Path= "C:\\Users\\Ja\\Music\\Nowości Disco Polo  2017";
         trackList.setPath(Path);
     }
 
@@ -140,4 +148,26 @@ public class TrackListUtil {
     public void deleteTrackList() {
         trackList.deletePlaylist();
     }
+
+    public void shuffle() {
+        ObservableList<Track> nonshuffle = trackList.getPlaylist();
+        ObservableList<Track> shuffle = FXCollections.observableArrayList();
+        int lastIndex = nonshuffle.size()-1;
+        List<Integer> indexList = new ArrayList<>();
+        int index=0;
+        for (int i = 0; i < lastIndex+1; i++) {
+            if(indexList.isEmpty()) {
+                index = (int) Math.round(Math.random()* (lastIndex));
+            }
+            else {
+                do {
+                    index = (int) Math.round(Math.random()* lastIndex);
+                }while (indexList.contains(index));
+            }
+            shuffle.add(nonshuffle.get(index));
+            indexList.add(index);
+        }
+    trackList.setPlaylist(shuffle);
+    }
+
 }

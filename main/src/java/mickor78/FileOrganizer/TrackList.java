@@ -111,4 +111,8 @@ public class TrackList {
     public void deletePlaylist() {
         playlist.removeAll();
     }
+
+    public void setPlaylist(ObservableList<Track> playlist) {
+        this.playlist = playlist;
+    }
 }
