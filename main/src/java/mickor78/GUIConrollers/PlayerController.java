@@ -49,6 +49,9 @@ private Slider sliderFast;
     @FXML
     private Button playButton;
 
+    @FXML
+    private  Button removeTracklistButton;
+
 
     @FXML
     private Button closeButton;
@@ -139,8 +142,6 @@ private Slider sliderFast;
                 currentPlaylist = trackListView.getSelectionModel().getSelectedItem();
                 refreshList(playlistView);
                 setupPlaylistView();
-                playerUtil.setCurrentTracklist(currentPlaylist);
-                setupPlaybackView();
             }
         });
 
@@ -164,6 +165,16 @@ private Slider sliderFast;
         });
 
     }
+
+
+    @FXML
+    void removeTrackListHandle() {
+        playerUtil.removeTracklist(currentPlaylist);
+        setupTrackListView();
+    }
+
+
+
 
 
     private void setupPlaybackView(){
