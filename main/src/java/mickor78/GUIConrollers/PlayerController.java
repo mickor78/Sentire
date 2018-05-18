@@ -1,16 +1,15 @@
 package mickor78.GUIConrollers;
-
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+
+import java.io.IOException;
+import java.util.*;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -21,9 +20,15 @@ import mickor78.FileOrganizer.TrackList;
 import mickor78.MainApp;
 import mickor78.util.PlayerUtil;
 import mickor78.util.TrackListUtil;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+import org.codehaus.plexus.util.StringInputStream;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.xml.bind.Marshaller;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.InputStream;
 
 public class PlayerController {
 
@@ -70,6 +75,16 @@ public class PlayerController {
     private Button nextTrackButton;
 
     @FXML
+    private Button cutButton;
+
+    @FXML
+    private TextField lowCutTextField;
+
+    @FXML
+    private TextField highCutTextView;
+
+
+    @FXML
     private Button previousTrackButton;
 
     @FXML
@@ -99,6 +114,7 @@ public class PlayerController {
     @FXML
     private ListView<TrackList> trackListView;
     private ObservableList<TrackList> observableTrackList;
+
 
     private MainApp mainApp;
 
@@ -146,9 +162,7 @@ public class PlayerController {
             maximalized = true;
             mainApp.getPrimaryStage().setMaximized(true);
         }
-
     }
-
 
     private void setupTrackListView() {
         observableTrackList = playerUtil.getAll();
@@ -177,10 +191,32 @@ public class PlayerController {
                 setupPlaylistView();
             }
         });
+    }
 
+    @FXML
+    private void handleCut() throws IOException, UnsupportedAudioFileException {
+        double secFrom = getSec(lowCutTextField.getText());
+        playerUtil.getPlayer().seek(Duration.seconds(secFrom));
+        if(!highCutTextView.getText().isEmpty()) {
+            double secTo = getSec(highCutTextView.getText());
+            System.out.println(highCutTextView.getText());
+        }
+
+
+        AudioInputStream audioIn = AudioSystem.getAudioInputStream(playerUtil.getCurrentTrack().getFile());
     }
 
 
+
+    private double getSec(String in) {
+        String time = in;
+        System.out.println(in);
+        String[] timeSplited = time.split(":");
+        double min = Double.parseDouble(timeSplited[0]);
+        double sec = Double.parseDouble(timeSplited[1]);
+        sec = sec+min*60;
+        return sec;
+    }
 
     private void setupPlaylistView() {
         observablePlayListView = currentPlaylist.getPlaylist();
@@ -256,16 +292,21 @@ public class PlayerController {
                 handlePlayTrigger();
             } else if (click.getClickCount() == 1) {
                 playerUtil.setCurrentMedia(listPlayback.getSelectionModel().getSelectedItem());
+                if(!playerUtil.isPlayerInitialized())setMediaInfo(playerUtil.getCurrentTrack());
             }
         });
     }
 
     @FXML
     private void handleRepeatTrigger() {
-        if (!played) {
+        if (!repeat) {
             playerUtil.repeat(true);
+            repeatButton.setText("NO REPEAT");
+            repeat = true;
         } else {
             playerUtil.repeat(false);
+            repeatButton.setText("REPEAT");
+            repeat=false;
         }
     }
 
@@ -281,6 +322,7 @@ public class PlayerController {
     @FXML
     private void handlePlayTrigger() {
 
+        if(!playerUtil.isPlayerInitialized()) playerUtil.initialPlayer();
         if(!playerUtil.getPlayer().getMedia().equals(playerUtil.getCurrentTrack())){
             setMediaInfo(playerUtil.getCurrentTrack());
             playerUtil.initialPlayer();

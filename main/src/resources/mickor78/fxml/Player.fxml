@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="660.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mickor78.GUIConrollers.PlayerController">
+<AnchorPane fx:id="MainPane" prefHeight="660.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mickor78.GUIConrollers.PlayerController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -51,7 +51,7 @@
                         </ToolBar>
                         <HBox alignment="CENTER" prefHeight="36.0" prefWidth="306.0" spacing="10.0">
                            <children>
-                              <Label onMouseClicked="#handlePlaylist" text="PLAYLISTA" textAlignment="CENTER">
+                              <Label text="PLAYLISTA" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
@@ -101,9 +101,9 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                            <children>
-                              <TextField prefHeight="25.0" prefWidth="48.0" />
-                              <TextField prefHeight="25.0" prefWidth="48.0" />
-                              <Button mnemonicParsing="false" text="CUT" />
+                              <TextField fx:id="lowCutTextField" prefHeight="25.0" prefWidth="48.0" />
+                              <TextField fx:id="highCutTextView" prefHeight="25.0" prefWidth="48.0" />
+                              <Button fx:id="cutButton" mnemonicParsing="false" onMouseClicked="#handleCut" text="CUT" />
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Slider fx:id="sliderFast" max="50.0" min="-50.0" minorTickCount="10" prefHeight="14.0" prefWidth="159.0" showTickMarks="true" snapToTicks="true" VBox.vgrow="ALWAYS" />

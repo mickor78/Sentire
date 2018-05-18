@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import mickor78.FileOrganizer.*;
 
 
@@ -21,6 +22,7 @@ public class PlayerUtil {
     private MediaPlayer player;
 
     private boolean repeat;
+    private boolean playerInitialized;
 
     public void addTrackToCurrentTracklist(Track track) {
         currentTracklist.addToPlaylist(track);
@@ -113,6 +115,7 @@ public class PlayerUtil {
     }
 
     public void initialPlayer() {
+        playerInitialized = true;
         if (player != null) player.stop();
         player = new MediaPlayer(currentMedia);
         repeat(repeat);
@@ -156,11 +159,22 @@ public class PlayerUtil {
 
     public void repeat(boolean iWantTo) {
         repeat = iWantTo;
-        player.getOnRepeat();
+            if(iWantTo) {
+                player.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        player.seek(Duration.ZERO);
+                        repeat(iWantTo);
+                    }
+                });
+            }
     }
 
     public Media getMedia() {
         return currentMedia;
     }
 
+    public boolean isPlayerInitialized() {
+        return playerInitialized;
+    }
 }
