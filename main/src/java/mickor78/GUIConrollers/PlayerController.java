@@ -52,6 +52,9 @@ private Slider sliderFast;
     @FXML
     private  Button removeTracklistButton;
 
+    @FXML
+    private Button addToPlaybackButton;
+
 
     @FXML
     private Button closeButton;
@@ -78,8 +81,7 @@ private Slider sliderFast;
     private TrackList currentPlaylist;
     private Track fooTrack;
     private double speed;
-
-
+    private Track addToPlayBackTrack;
 
 
     /**
@@ -164,6 +166,12 @@ private Slider sliderFast;
             return cell;
         });
 
+        playlistView.setOnMouseClicked((MouseEvent click)->{
+            if(click.getClickCount()==1){
+                addToPlayBackTrack=playlistView.getSelectionModel().getSelectedItem();
+            }
+        });
+
     }
 
 
@@ -171,6 +179,14 @@ private Slider sliderFast;
     void removeTrackListHandle() {
         playerUtil.removeTracklist(currentPlaylist);
         setupTrackListView();
+    }
+
+    @FXML
+    void addToPlaybackHandle() {
+        playerUtil.addTrackToCurrentTracklist(addToPlayBackTrack);
+        System.out.println("Wcisłem");
+        refreshList(listPlayback);
+        setupPlaybackView();
     }
 
 

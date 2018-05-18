@@ -20,6 +20,10 @@ public class PlayerUtil {
 
     public void addTrackToCurrentTracklist(Track track){currentTracklist.addToPlaylist(track);}
 
+    public PlayerUtil() {
+        currentTracklist = new TrackList();
+    }
+
     public void addPlaylistToListOfPlaylist(TrackList newTrackList){
         listOfPlaylist.add(newTrackList);
     }
@@ -85,5 +89,9 @@ public class PlayerUtil {
 
     public void setRate(double speed) {
         player.setRate(speed);
+    }
+
+    public void removeTracklist(TrackList currentPlaylist) {
+        listOfPlaylist.remove(currentPlaylist);
     }
 }
