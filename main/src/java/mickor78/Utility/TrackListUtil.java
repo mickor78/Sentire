@@ -1,4 +1,4 @@
-package mickor78.util;
+package mickor78.Utility;
 
 
 import javafx.collections.FXCollections;
@@ -13,7 +13,6 @@ import java.util.List;
  * Utilities to deal with Tracklists.
  *
  * @author Michał Korzeniewski
- * @email mickor78@gmail.com
  */
 
 public class TrackListUtil {
@@ -124,18 +123,7 @@ public class TrackListUtil {
         return trackList;
     }
 
-    /**
-     * Clean characters of URL
-     *
-     * @param url
-     */
-    public static String cleanURL(String url) {
-        url = url.replace("\\", "\\");
-        url = url.replaceAll(" ", "%20");
-        url = url.replace("[", "%5B");
-        url = url.replace("]", "%5D");
-        return url;
-    }
+
 
     public void setTrackList(TrackList trackList) {
         this.trackList = trackList;
@@ -149,10 +137,13 @@ public class TrackListUtil {
         trackList.deletePlaylist();
     }
 
+    /**
+     * shuffle tracklist
+     */
     public void shuffle() {
-        ObservableList<Track> nonshuffle = trackList.getPlaylist();
+        ObservableList<Track> noshuffle = trackList.getPlaylist();
         ObservableList<Track> shuffle = FXCollections.observableArrayList();
-        int lastIndex = nonshuffle.size()-1;
+        int lastIndex = noshuffle.size()-1;
         List<Integer> indexList = new ArrayList<>();
         int index=0;
         for (int i = 0; i < lastIndex+1; i++) {
@@ -164,7 +155,7 @@ public class TrackListUtil {
                     index = (int) Math.round(Math.random()* lastIndex);
                 }while (indexList.contains(index));
             }
-            shuffle.add(nonshuffle.get(index));
+            shuffle.add(noshuffle.get(index));
             indexList.add(index);
         }
     trackList.setPlaylist(shuffle);

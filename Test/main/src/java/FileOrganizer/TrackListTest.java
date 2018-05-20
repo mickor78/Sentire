@@ -19,7 +19,7 @@ public class TrackListTest {
 
     @Before
     public void setUp() throws Exception {
-        testTrackList = new TrackList(1,"TestPlaylist","fooPath");
+        testTrackList = new TrackList("TestPlaylist","fooPath");
         testTrack = new Track(foo,"Test","Test");
     }
 

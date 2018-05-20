@@ -13,7 +13,6 @@ import java.io.IOException;
 /**
  *
  * @author Michal Korzeniewski
- * @email mickor78@gmai.com
  */
 public class MainApp extends Application {
 

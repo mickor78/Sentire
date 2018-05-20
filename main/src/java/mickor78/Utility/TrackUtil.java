@@ -1,4 +1,4 @@
-package mickor78.util;
+package mickor78.Utility;
 
 import mickor78.FileOrganizer.Track;
 import javafx.scene.media.Media;
@@ -9,7 +9,6 @@ import java.util.List;
  * Utilities to deal with Track.
  *
  * @author Michał Korzeniewski
- * @email mickor78@gmail.com
  */
 
 public class TrackUtil {
@@ -21,7 +20,12 @@ public class TrackUtil {
         this.track = track;
     }
 
-
+    /**
+     * for given track set all information
+     *
+     * @param track
+     * @return
+     */
     public static Track callTrackUtil(Track track) {
         TrackUtil trackUtil = new TrackUtil(track);
         trackUtil.setTitle();
@@ -32,21 +36,30 @@ public class TrackUtil {
         return  filledTrack;
     }
 
+    /**
+     * set path from file
+     */
     private void setPath() {
         track.setPath(track.getFile().getPath());
     }
 
+    /**
+     * set artist from name of file
+     */
     private void setArtist() {
-        String author = track.getFile().getName().split("-")[0];
+        String author = track.getFile().getName().split("-")[0].split("\\.")[0];
         track.setArtist(author);
     }
 
+    /**
+     * set Title from name of file
+     */
     private void setTitle() {
         String name;
         if(track.getFile().getName().split("-").length>=2)
-            name = track.getFile().getName().split("-")[1];
+            name = track.getFile().getName().split("-")[1].split("\\.")[0];
         else
-            name = track.getFile().getName();
+            name = track.getFile().getName().split("\\.")[0];
         track.setTitle(name);
     }
 
@@ -54,8 +67,12 @@ public class TrackUtil {
         return track;
     }
 
+    /**
+     * set media of track
+     */
 
     public void setMedia() {
       Media media = new Media(track.getFile().toURI().toString());
+      track.setMedia(media);
     }
 }

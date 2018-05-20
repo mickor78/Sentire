@@ -10,9 +10,13 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Tracklist class holding playlist
+ *
+ * @author Michal Korzeniewski
+ */
 public class TrackList {
 
-    private IntegerProperty id;
     private StringProperty name;
     private StringProperty path;
     private ObservableList<Track> playlist = FXCollections.observableArrayList();
@@ -20,18 +24,16 @@ public class TrackList {
     /**
      * Default constructor
      */
-    public TrackList() {this(9999,"Name","Path");}
+    public TrackList() {this("Name","Path");}
 
     /**
      * Constructor with initial data.
      *
-     * @param id
      * @param path
      * @param name
      */
 
-    public TrackList(Integer id, String name, String path) {
-        this.id = new SimpleIntegerProperty(id);
+    public TrackList(String name, String path) {
         this.name = new SimpleStringProperty(name);
         this.path = new SimpleStringProperty(path);
     }
@@ -66,17 +68,7 @@ public class TrackList {
     }
 
 
-    public int getId() {
-        return id.get();
-    }
 
-    public IntegerProperty idProperty() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id.set(id);
-    }
 
     public StringProperty getName() {
         return name;
@@ -111,6 +103,8 @@ public class TrackList {
     public void deletePlaylist() {
         playlist.removeAll();
     }
+
+
 
     public void setPlaylist(ObservableList<Track> playlist) {
         this.playlist = playlist;

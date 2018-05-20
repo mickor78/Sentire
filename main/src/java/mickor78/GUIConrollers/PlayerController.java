@@ -5,31 +5,30 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
-import java.util.*;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import mickor78.FileOrganizer.SearcherOfSources;
 import mickor78.FileOrganizer.Track;
 import mickor78.FileOrganizer.TrackList;
 import mickor78.MainApp;
-import mickor78.util.PlayerUtil;
-import mickor78.util.TrackListUtil;
-import org.codehaus.plexus.util.StringInputStream;
+import mickor78.Utility.PieceViewer;
+import mickor78.Utility.PlayerUtil;
+import mickor78.Utility.TrackListUtil;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.xml.bind.Marshaller;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.InputStream;
 
+/**
+ * Class controlling Player.fxml
+ *
+ *  @author Michal Korzeniewski
+ */
 public class PlayerController {
 
     @FXML
@@ -122,7 +121,7 @@ public class PlayerController {
     private boolean repeat;
     private boolean maximalized;
     private PlayerUtil playerUtil;
-    private Stage dialogStage;
+    //private Stage dialogStage;
 
     //current variables
     private TrackList playBackQueue;
@@ -150,6 +149,10 @@ public class PlayerController {
         System.exit(0);
     }
 
+    /**
+     * maximize button handle
+     */
+
     @FXML
     void handleMaximalize() {
         if (maximalized) {
@@ -163,6 +166,10 @@ public class PlayerController {
             mainApp.getPrimaryStage().setMaximized(true);
         }
     }
+
+    /**
+     * Method set up TrackLists view
+     */
 
     private void setupTrackListView() {
         observableTrackList = playerUtil.getAll();
@@ -182,7 +189,7 @@ public class PlayerController {
             return cell;
         });
 
-        //Handle view tracklist on one click
+        //Handle view playlist on one click
         trackListView.setOnMouseClicked((MouseEvent click) -> {
             if (click.getClickCount() == 1) {
                 currentPlaylist.deletePlaylist();
@@ -193,6 +200,13 @@ public class PlayerController {
         });
     }
 
+    /**
+     * Cutting music service
+     *
+     * @throws IOException
+     * @throws UnsupportedAudioFileException
+     */
+
     @FXML
     private void handleCut() throws IOException, UnsupportedAudioFileException {
         double secFrom = getSec(lowCutTextField.getText());
@@ -201,12 +215,15 @@ public class PlayerController {
             double secTo = getSec(highCutTextView.getText());
             System.out.println(highCutTextView.getText());
         }
-
-
-        AudioInputStream audioIn = AudioSystem.getAudioInputStream(playerUtil.getCurrentTrack().getFile());
     }
 
 
+    /**
+     * Method convert MM:SS in string to second
+     *
+     * @param in
+     * @return double time in second
+     */
 
     private double getSec(String in) {
         String time = in;
@@ -217,6 +234,10 @@ public class PlayerController {
         sec = sec+min*60;
         return sec;
     }
+
+    /**
+     * Method sets up PlaylistView
+     */
 
     private void setupPlaylistView() {
         observablePlayListView = currentPlaylist.getPlaylist();
@@ -235,6 +256,7 @@ public class PlayerController {
             return cell;
         });
 
+        // select track to add to playback queue
         playlistView.setOnMouseClicked((MouseEvent click) -> {
             if (click.getClickCount() == 1) {
                 addToPlayBackTrack = playlistView.getSelectionModel().getSelectedItem();
@@ -243,12 +265,19 @@ public class PlayerController {
 
     }
 
+    /**
+     * removes Tracklist
+     */
 
     @FXML
     void removeTrackListHandle() {
         playerUtil.removeTracklist(currentPlaylist);
         setupTrackListView();
     }
+
+    /**
+     * add addToPlayBackTrack to playBack
+     */
 
     @FXML
     void addToPlaybackHandle() {
@@ -257,6 +286,9 @@ public class PlayerController {
         setupPlaybackView();
     }
 
+    /**
+     * Add all to playback
+     */
     @FXML
     void addAllToPlaybackHandle() {
         playerUtil.addPlaylistToPlayback(currentPlaylist);
@@ -265,6 +297,9 @@ public class PlayerController {
     }
 
 
+    /**
+     * sets up Playback View
+     */
     private void setupPlaybackView() {
         observablePlayListView = playerUtil.getCurrentTracklist().getPlaylist();
         listPlayback.setItems(observablePlayListView);
@@ -283,6 +318,8 @@ public class PlayerController {
         });
 
 
+        // play track if double clicked
+        // select if one clicked
         listPlayback.setOnMouseClicked((MouseEvent click) -> {
             if (click.getClickCount() == 2) {
                 //playerUtil.pause();
@@ -297,6 +334,10 @@ public class PlayerController {
         });
     }
 
+
+    /**
+     * repeat track
+     */
     @FXML
     private void handleRepeatTrigger() {
         if (!repeat) {
@@ -310,6 +351,9 @@ public class PlayerController {
         }
     }
 
+    /**
+     * shuffle playback queue
+     */
     @FXML
     private void handleShuffleTrigger() {
         TrackListUtil trackListUtil= new TrackListUtil(playerUtil.getCurrentTracklist());
@@ -319,10 +363,14 @@ public class PlayerController {
         setupPlaybackView();
     }
 
+    /**
+     * play track if currentTrack is in playerUtil
+     */
     @FXML
     private void handlePlayTrigger() {
 
         if(!playerUtil.isPlayerInitialized()) playerUtil.initialPlayer();
+        //if selected track are not playing set selected as currentTrack
         if(!playerUtil.getPlayer().getMedia().equals(playerUtil.getCurrentTrack())){
             setMediaInfo(playerUtil.getCurrentTrack());
             playerUtil.initialPlayer();
@@ -341,6 +389,10 @@ public class PlayerController {
 
     }
 
+    /**
+     * stop track
+     */
+
     @FXML
     private void handleStopTrgger() {
         progressBar.setProgress(0);
@@ -348,34 +400,27 @@ public class PlayerController {
         playButton.setText("Play");
     }
 
+    /**
+     * Add playlist to list of TrackList
+     */
     @FXML
     void handleAddPlaylist() {
-        DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("Wybierz katalog z plikami mp3");
-        File selectedDirectory = chooser.showDialog(dialogStage);
-
-        //creating tracklist
-        TrackListUtil trackListUtil = new TrackListUtil();
-        trackListUtil.setPath(selectedDirectory.getPath());
-        trackListUtil.searchInPathAndAddToPlaylist();
-
-        //create Tracklist and add to playerUtil
-        TrackList newTrackList = trackListUtil.getTrackList();
-        playerUtil.addPlaylistToListOfPlaylist(newTrackList);
+        playerUtil.addPlaylistToListOfPlaylist(SearcherOfSources.invoke());
     }
 
+    /**
+     * Allert with track info
+     */
 
     @FXML
     private void handleTrackInfo() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Information about current track");
-        alert.setHeaderText(playerUtil.getCurrentTrack().getTitle().getValue());
-        alert.setContentText(playerUtil.getCurrentTrack().getArtist().getValue());
-        alert.showAndWait();
+        PieceViewer.invoke(playerUtil);
     }
 
 
+    /**
+     * next track
+     */
     @FXML
     private void handleNextTrack() {
 
@@ -385,6 +430,9 @@ public class PlayerController {
         handleProgresBar();
     }
 
+    /**
+     * previous track
+     */
     @FXML
     private void handlePreviousTrack() {
         playerUtil.playPrevious();
@@ -392,6 +440,10 @@ public class PlayerController {
         playButton.setText("Pause");
         handleProgresBar();
     }
+
+    /**
+     * initialize method
+     */
 
     @FXML
     void initialize() {
@@ -402,6 +454,9 @@ public class PlayerController {
         setupTrackListView();
     }
 
+    /**
+     * set up progressBar to show duration
+     */
     private void handleProgresBar() {
         // Add progressbar listener to show current song percent
         progressChangeListener = (ObservableValue<? extends Duration> observableValue,
@@ -423,6 +478,9 @@ public class PlayerController {
 
     }
 
+    /**
+     * speed player handler
+     */
     private void playingSpeedHandler() {
         sliderFast.valueProperty().addListener(((observable, oldValue, newValue) -> {
             speed = Math.exp(Math.pow(newValue.doubleValue() / 50, 1.0));
@@ -431,15 +489,10 @@ public class PlayerController {
         }));
     }
 
-    public void refreshTable(TableView table) {
-        for (int i = 0; i < table.getColumns().size(); i++) {
-            TableColumn tableColumn = ((TableColumn) (table.getColumns().get(i)));
-            if (tableColumn.isVisible()) {
-                tableColumn.setVisible(false);
-                tableColumn.setVisible(true);
-            }
-        }
-    }
+    /**
+     * refresh input list
+     * @param listView
+     */
 
     public void refreshList(ListView listView) {
         ObservableList<TrackList> items = listView.getItems();
@@ -447,10 +500,17 @@ public class PlayerController {
         listView.setItems(items);
     }
 
+    /**
+     * set media info in labels
+     * @param track
+     */
+
     public void setMediaInfo(Track track) {
         titleLabel.setText(track.getTitle().getValue());
         autorLabel.setText(track.getArtist().getValue());
     }
+
+
 }
 
 

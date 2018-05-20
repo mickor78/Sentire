@@ -9,7 +9,6 @@ import java.io.File;
 
 /**
  * @author Michal Korzeniewski
- * @mail mickor78@gmail.com
  */
 
 public class Track {
@@ -44,6 +43,7 @@ public class Track {
         this.fileName = new SimpleStringProperty(fileName);
         this.path = new SimpleStringProperty(fileName);
     }
+
 
     public Track(File file) {
         this.file = file;
