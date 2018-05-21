@@ -1,15 +1,10 @@
-package FileOrganizer;
+package mickor78.FileOrganizer;
 
-import javafx.collections.ObservableList;
-import mickor78.FileOrganizer.*;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-
-import static org.junit.Assert.*;
 
 public class TrackListTest {
 

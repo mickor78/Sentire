@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="MainPane" prefHeight="660.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mickor78.GUIConrollers.PlayerController">
+<AnchorPane fx:id="MainPane" prefHeight="660.0" prefWidth="660.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mickor78.GUIConrollers.PlayerController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -25,14 +25,14 @@
                               <Font name="Trebuchet MS" size="14.0" />
                            </font>
                         </Text>
-                        <ListView fx:id="listPlayback" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="listPlayback" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray; -fx-border-color: black;" />
                         <HBox alignment="CENTER" prefHeight="8.0" prefWidth="306.0" spacing="5.0">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                            <children>
-                              <Button mnemonicParsing="false" text="Usuń z kolejki" />
-                              <Button mnemonicParsing="false" text="Usuń kolejke" />
+                              <Button mnemonicParsing="false" style="-fx-background-color: white;" text="Usuń z kolejki" />
+                              <Button mnemonicParsing="false" style="-fx-background-color: white;" text="Usuń kolejke" />
                            </children>
                         </HBox>
                      </children>
@@ -42,11 +42,11 @@
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefHeight="276.0" prefWidth="313.0">
                      <children>
-                        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0">
+                        <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: gray;">
                           <items>
-                              <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" text="CLOSE" />
-                            <Button fx:id="maxButton" mnemonicParsing="false" onAction="#handleMaximalize" text="MAXIMALIZE" />
-                              <Button mnemonicParsing="false" text="MINIMALIZE" />
+                              <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" style="-fx-background-color: white;" text="CLOSE" />
+                            <Button fx:id="maxButton" mnemonicParsing="false" onAction="#handleMaximalize" style="-fx-background-color: white;" text="MAXIMALIZE" />
+                              <Button mnemonicParsing="false" style="-fx-background-color: white;" text="MINIMALIZE" />
                           </items>
                         </ToolBar>
                         <HBox alignment="CENTER" prefHeight="36.0" prefWidth="306.0" spacing="10.0">
@@ -94,16 +94,16 @@
                         <Label fx:id="timeLabel" text="00:00" />
                         <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" spacing="5.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="previousTrackButton" mnemonicParsing="false" onMouseClicked="#handlePreviousTrack" text="PREVIOUS" />
-                              <Button fx:id="playButton" mnemonicParsing="false" onAction="#handlePlayTrigger" prefHeight="23.0" prefWidth="52.0" text="PLAY" />
-                              <Button fx:id="nextTrackButton" mnemonicParsing="false" onMouseClicked="#handleNextTrack" text="NEXT" />
+                              <Button fx:id="previousTrackButton" mnemonicParsing="false" onMouseClicked="#handlePreviousTrack" style="-fx-background-color: white;" text="PREVIOUS" />
+                              <Button fx:id="playButton" mnemonicParsing="false" onAction="#handlePlayTrigger" prefHeight="23.0" prefWidth="52.0" style="-fx-background-color: white;" text="PLAY" />
+                              <Button fx:id="nextTrackButton" mnemonicParsing="false" onMouseClicked="#handleNextTrack" style="-fx-background-color: white;" text="NEXT" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                            <children>
                               <TextField fx:id="lowCutTextField" prefHeight="25.0" prefWidth="48.0" />
                               <TextField fx:id="highCutTextView" prefHeight="25.0" prefWidth="48.0" />
-                              <Button fx:id="cutButton" mnemonicParsing="false" onMouseClicked="#handleCut" text="CUT" />
+                              <Button fx:id="cutButton" mnemonicParsing="false" onMouseClicked="#handleCut" style="-fx-background-color: white;" text="CUT" />
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Slider fx:id="sliderFast" max="50.0" min="-50.0" minorTickCount="10" prefHeight="14.0" prefWidth="159.0" showTickMarks="true" snapToTicks="true" VBox.vgrow="ALWAYS" />
@@ -117,9 +117,9 @@
                         </HBox>
                         <HBox alignment="CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Button fx:id="repeatButton" mnemonicParsing="false" onMouseClicked="#handleRepeatTrigger" text="REPEAT" />
-                              <Button fx:id="stopButton" mnemonicParsing="false" onAction="#handleStopTrgger" text="STOP" />
-                              <Button fx:id="shuffleButton" mnemonicParsing="false" onMouseClicked="#handleShuffleTrigger" text="SHUFFLE" />
+                              <Button fx:id="repeatButton" mnemonicParsing="false" onMouseClicked="#handleRepeatTrigger" style="-fx-background-color: white;" text="REPEAT" />
+                              <Button fx:id="stopButton" mnemonicParsing="false" onAction="#handleStopTrgger" style="-fx-background-color: white;" text="STOP" />
+                              <Button fx:id="shuffleButton" mnemonicParsing="false" onMouseClicked="#handleShuffleTrigger" style="-fx-background-color: white;" text="SHUFFLE" />
                            </children>
                         </HBox>
                      </children>
@@ -132,11 +132,11 @@
                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
                        <children>
                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="LISTA PLAYLIST" />
-                           <ListView fx:id="trackListView" prefHeight="200.0" prefWidth="200.0" />
+                           <ListView fx:id="trackListView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray; -fx-border-color: black;" />
                            <HBox alignment="CENTER" prefHeight="45.0" prefWidth="245.0" spacing="5.0">
                                <children>
-                                   <Button fx:id="addPlaylistButton" mnemonicParsing="false" onAction="#handleAddPlaylist" text="Dodaj Playliste" />
-                                   <Button fx:id="removeTracklistButton" mnemonicParsing="false" onMouseClicked="#removeTrackListHandle" text="Usuń playliste" />
+                                   <Button fx:id="addPlaylistButton" mnemonicParsing="false" onAction="#handleAddPlaylist" style="-fx-background-color: white;" text="Dodaj Playliste" />
+                                   <Button fx:id="removeTracklistButton" mnemonicParsing="false" onMouseClicked="#removeTrackListHandle" style="-fx-background-color: white;" text="Usuń playliste" />
                                </children>
                            </HBox>
                        </children>
@@ -149,12 +149,15 @@
                    </VBox>
                    <VBox prefHeight="390.0" prefWidth="150.0" spacing="10.0" HBox.hgrow="ALWAYS">
                        <children>
-                           <Label text="PLAYLISTA" />
-                           <ListView fx:id="playlistView" prefHeight="371.0" prefWidth="300.0" />
+                           <Label text="PLAYLISTA">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                           <ListView fx:id="playlistView" prefHeight="371.0" prefWidth="300.0" style="-fx-background-color: gray; -fx-border-color: black;" />
                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                                <children>
-                                   <Button fx:id="addToPlaybackButton" mnemonicParsing="false" onMouseClicked="#addToPlaybackHandle" text="Dodaj do kolejki" />
-                                   <Button fx:id="addAllToPlayback" mnemonicParsing="false" onMouseClicked="#addAllToPlaybackHandle" text="Dodaj wszystko" />
+                                   <Button fx:id="addToPlaybackButton" mnemonicParsing="false" onMouseClicked="#addToPlaybackHandle" style="-fx-background-color: white;" text="Dodaj do kolejki" />
+                                   <Button fx:id="addAllToPlayback" mnemonicParsing="false" onMouseClicked="#addAllToPlaybackHandle" style="-fx-background-color: white;" text="Dodaj wszystko" />
                                </children>
                            </HBox>
                        </children>
