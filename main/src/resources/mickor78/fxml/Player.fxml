@@ -31,8 +31,8 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                            <children>
-                              <Button mnemonicParsing="false" style="-fx-background-color: white;" text="Usuń z kolejki" />
-                              <Button mnemonicParsing="false" style="-fx-background-color: white;" text="Usuń kolejke" />
+                              <Button disable="true" mnemonicParsing="false" style="-fx-background-color: white;" text="Usuń z kolejki" />
+                              <Button disable="true" mnemonicParsing="false" style="-fx-background-color: white;" text="Usuń kolejke" />
                            </children>
                         </HBox>
                      </children>
@@ -46,12 +46,12 @@
                           <items>
                               <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" style="-fx-background-color: white;" text="CLOSE" />
                             <Button fx:id="maxButton" mnemonicParsing="false" onAction="#handleMaximalize" style="-fx-background-color: white;" text="MAXIMALIZE" />
-                              <Button mnemonicParsing="false" style="-fx-background-color: white;" text="MINIMALIZE" />
+                              <Button disable="true" mnemonicParsing="false" style="-fx-background-color: white;" text="MINIMALIZE" />
                           </items>
                         </ToolBar>
                         <HBox alignment="CENTER" prefHeight="36.0" prefWidth="306.0" spacing="10.0">
                            <children>
-                              <Label text="PLAYLISTA" textAlignment="CENTER">
+                              <Label opacity="0.2" text="PLAYLISTA" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
@@ -61,7 +61,7 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="OKNO VIDEO" textAlignment="CENTER">
+                              <Label opacity="0.18" text="OKNO VIDEO" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
@@ -102,7 +102,7 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                            <children>
                               <TextField fx:id="lowCutTextField" prefHeight="25.0" prefWidth="48.0" />
-                              <TextField fx:id="highCutTextView" prefHeight="25.0" prefWidth="48.0" />
+                              <TextField fx:id="highCutTextView" disable="true" prefHeight="25.0" prefWidth="48.0" />
                               <Button fx:id="cutButton" mnemonicParsing="false" onMouseClicked="#handleCut" style="-fx-background-color: white;" text="CUT" />
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                  <children>

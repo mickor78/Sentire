@@ -213,7 +213,6 @@ public class PlayerController {
         playerUtil.getPlayer().seek(Duration.seconds(secFrom));
         if(!highCutTextView.getText().isEmpty()) {
             double secTo = getSec(highCutTextView.getText());
-            System.out.println(highCutTextView.getText());
         }
     }
 

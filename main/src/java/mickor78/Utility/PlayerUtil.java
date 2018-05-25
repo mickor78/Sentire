@@ -136,10 +136,7 @@ public class PlayerUtil {
     public void play() {
         if (player != null) {
             player.play();
-            System.out.println(player.getStatus());
-            System.out.println(player.getMedia().getSource());
-
-        }
+            }
     }
 
     /**
