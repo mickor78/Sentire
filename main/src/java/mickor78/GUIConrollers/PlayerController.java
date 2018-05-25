@@ -325,7 +325,7 @@ public class PlayerController {
                 //playerUtil.pause();
                 playerUtil.setCurrentMedia(listPlayback.getSelectionModel().getSelectedItem());
                 setMediaInfo(playerUtil.getCurrentTrack());
-                playerUtil.initialPlayer();
+                //playerUtil.initialPlayer();
                 handlePlayTrigger();
             } else if (click.getClickCount() == 1) {
                 playerUtil.setCurrentMedia(listPlayback.getSelectionModel().getSelectedItem());
@@ -375,6 +375,7 @@ public class PlayerController {
             setMediaInfo(playerUtil.getCurrentTrack());
             playerUtil.initialPlayer();
         }
+
 
         played = playerUtil.getPlayer().getStatus().equals(MediaPlayer.Status.PLAYING);
         if (!played) {
